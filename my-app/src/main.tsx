@@ -1,10 +1,21 @@
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import App from './App'
+import { AuthProvider } from './context/AuthContext'
+import { getGoogleClientId } from './config/env'
 import './index.css'
-import App from './App.tsx'
 
+/**
+ * GoogleOAuthProvider must wrap the entire app so any child component
+ * can use Google OAuth hooks and the GoogleLogin button.
+ */
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <GoogleOAuthProvider clientId={getGoogleClientId()}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </GoogleOAuthProvider>
   </StrictMode>,
 )
